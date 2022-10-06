@@ -7,8 +7,12 @@ test("should be create a employee", () => {
     birthday: new Date("09/10/1980"),
     document: "458.622.688-98",
     departament: "Technology",
-    role: "developer",
+    role: "Developer",
   });
-
+  expect(employee.birthday).toEqual('John Doe');
+  expect(employee.birthday).toEqual(new Date("09/10/1980"));
+  expect(employee.document).toEqual("458.622.688.98");
+  expect(employee.departament).toEqual("Technology");
+  expect(employee.role).toEqual("Developer");
   expect(employee).toBeInstanceOf(Employee);
 });
