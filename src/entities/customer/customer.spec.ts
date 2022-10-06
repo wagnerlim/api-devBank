@@ -11,9 +11,7 @@ test("create a customer with a valid CPF and with special character", () => {
     documentType: "CPF",
   });
   expect(customer.name).toEqual("John Doe");
-  expect(customer.document).toContain(".");
-  expect(customer.document).toContain("-");
-  expect(customer.document).toEqual("963.259.440-11");
+  expect(customer.document).toEqual("96325944011");
   expect(customer).toBeInstanceOf(Customer);
 });
 
@@ -65,10 +63,7 @@ test("create an customer with a valid CNPJ and with special character", () => {
   });
 
   expect(customer.name).toEqual("John Doe");
-  expect(customer.document).toEqual("43.465.298/0001-18");
-  expect(customer.document).toContain(".");
-  expect(customer.document).toContain("/");
-  expect(customer.document).toContain("-");
+  expect(customer.document).toEqual("43465298000118");
   expect(customer).toBeInstanceOf(Customer);
 });
 test("create an customer with a valid CNPJ and without special character", () => {
