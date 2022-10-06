@@ -1,7 +1,108 @@
-import { expect, test } from "vitest";
+import { createExpect, expect, test } from "vitest";
 import { Customer } from "./customer";
 
 // General Tests-----------------------------------------------------
+test("create a customer with valid optionals values", () => {
+  const customer = new Customer({
+    name: "John Doe",
+    birthday: new Date(),
+    document: "96325944011",
+    documentType: "CPF",
+    email: "johndoe@devbank.com.br",
+    phone: {
+      countryCode: "55",
+      areaCode: "11",
+      number: "979675773",
+    },
+  });
+
+  expect(customer?.email).toEqual("johndoe@devbank.com.br");
+  expect(customer?.phone).toMatchObject({
+    countryCode: "55",
+    areaCode: "11",
+    number: "979675773",
+  });
+});
+
+test("should be throw a error invalid country code", () => {
+  expect(() => {
+    try {
+      new Customer({
+        name: "John Doe",
+        birthday: new Date(),
+        document: "96325944011",
+        documentType: "CPF",
+        email: "johndoe@devbank.com.br",
+        phone: {
+          countryCode: "5555",
+          areaCode: "11",
+          number: "979675773",
+        },
+      });
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }).toThrowError("Phone Contry Code Invalid!");
+});
+
+test("Expect to throw a exact error: Phone Contry Code Invalid!", () => {
+  try {
+    new Customer({
+      name: "John Doe",
+      birthday: new Date(),
+      document: "96325944011",
+      documentType: "CPF",
+      email: "johndoe@devbank.com.br",
+      phone: {
+        countryCode: "5555",
+        areaCode: "11",
+        number: "979675773",
+      },
+    });
+  } catch (error) {
+    expect(error.message).toEqual("Phone Contry Code Invalid!");
+  }
+});
+
+test("Expect to throw a exact error: Phone area Code Invalid!", () => {
+  try {
+    new Customer({
+      name: "John Doe",
+      birthday: new Date(),
+      document: "96325944011",
+      documentType: "CPF",
+      email: "johndoe@devbank.com.br",
+      phone: {
+        countryCode: "555",
+        areaCode: "111",
+        number: "9796757739",
+      },
+    });
+    throw new Error("");
+  } catch (error) {
+    expect(error.message).toEqual("Phone area Code Invalid!");
+  }
+});
+
+test("Expect to throw a exact error: Phone Number Invalid!", () => {
+  try {
+    new Customer({
+      name: "John Doe",
+      birthday: new Date(),
+      document: "96325944011",
+      documentType: "CPF",
+      email: "johndoe@devbank.com.br",
+      phone: {
+        countryCode: "555",
+        areaCode: "11",
+        number: "9796757733333",
+      },
+    });
+    throw new Error("erro");
+  } catch (error) {
+    expect(error.message).toEqual("Phone Number Invalid!");
+  }
+});
 
 //CPF TESTS-----------------------------------------------------------
 
@@ -28,28 +129,6 @@ test("create a customer with a valid CPF and without special character", () => {
   expect(customer.name).toEqual("John Doe");
   expect(customer.document).toEqual("96325944011");
   expect(customer).toBeInstanceOf(Customer);
-});
-
-test("create a customer with valid optionals values", () => {
-  const customer = new Customer({
-    name: "John Doe",
-    birthday: new Date(),
-    document: "96325944011",
-    documentType: "CPF",
-    email: "johndoe@devbank.com.br",
-    phone: {
-      countryCode: "55",
-      areaCode: "11",
-      number: "979675773",
-    },
-  });
-
-  expect(customer?.email).toEqual("johndoe@devbank.com.br");
-  expect(customer?.phone).toMatchObject({
-    countryCode: "55",
-    areaCode: "11",
-    number: "979675773",
-  });
 });
 
 test("Should be throw a error when try create with a invalid CPF", () => {
