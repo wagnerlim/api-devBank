@@ -1,4 +1,4 @@
-type departament = "Technology" | "Communication" | "Financial" | "management";
+type departament = "Technology" | "Communication" | "Financial" | "Management";
 export interface EmployeesProps {
   name: string;
   birthday: Date;
