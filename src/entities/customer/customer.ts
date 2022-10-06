@@ -1,6 +1,8 @@
-import { documentType } from "../../shared/types";
+import { documentType, phone } from "../../shared/types";
 import { validateCnpj } from "../../shared/utils/functions/validateCnpj";
 import { validateCpf } from "../../shared/utils/functions/validateCpf";
+import { validateEmail } from "../../shared/utils/functions/validateEmail";
+import { validatePhone } from "../../shared/utils/functions/validatePhone";
 
 export interface CustomerProps {
   name: string;
@@ -8,11 +10,7 @@ export interface CustomerProps {
   document: string;
   documentType: documentType;
   email?: string;
-  phone?: {
-    contryCode: string;
-    areaCode: string;
-    number: string;
-  };
+  phone?: phone;
 }
 
 export class Customer {
@@ -30,6 +28,12 @@ export class Customer {
   get documentType() {
     return this.props.documentType;
   }
+  get email() {
+    return this.props.email;
+  }
+  get phone() {
+    return this.props.phone;
+  }
 
   constructor(props: CustomerProps) {
     if (props.documentType === "CPF") {
@@ -39,8 +43,13 @@ export class Customer {
       if (!validateCnpj(props.document)) throw new Error("invalid CNPJ");
       props.document = props.document.replace(/[^\d]+/g, "");
     }
+    if (props.email) {
+      if (!validateEmail(props.email)) throw new Error("invalid Email");
+    }
+    if (props.phone) {
+      const verifyPhone = validatePhone(props.phone);
+      if (!verifyPhone.valid) throw new Error(verifyPhone.message);
+    }
     this.props = props;
   }
 }
-
-// Falta ver se os testes estão funcionando.

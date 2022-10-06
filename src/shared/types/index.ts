@@ -4,3 +4,8 @@ export type departament =
   | "Communication"
   | "Financial"
   | "Management";
+export type phone = {
+  countryCode: string;
+  areaCode: string;
+  number: string;
+};

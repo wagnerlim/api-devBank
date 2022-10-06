@@ -1,6 +1,8 @@
 import { expect, test } from "vitest";
 import { Customer } from "./customer";
 
+// General Tests-----------------------------------------------------
+
 //CPF TESTS-----------------------------------------------------------
 
 test("create a customer with a valid CPF and with special character", () => {
@@ -26,6 +28,28 @@ test("create a customer with a valid CPF and without special character", () => {
   expect(customer.name).toEqual("John Doe");
   expect(customer.document).toEqual("96325944011");
   expect(customer).toBeInstanceOf(Customer);
+});
+
+test("create a customer with valid optionals values", () => {
+  const customer = new Customer({
+    name: "John Doe",
+    birthday: new Date(),
+    document: "96325944011",
+    documentType: "CPF",
+    email: "johndoe@devbank.com.br",
+    phone: {
+      countryCode: "55",
+      areaCode: "11",
+      number: "979675773",
+    },
+  });
+
+  expect(customer?.email).toEqual("johndoe@devbank.com.br");
+  expect(customer?.phone).toMatchObject({
+    countryCode: "55",
+    areaCode: "11",
+    number: "979675773",
+  });
 });
 
 test("Should be throw a error when try create with a invalid CPF", () => {
