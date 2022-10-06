@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { Customer } from "./customer";
+import { Customer } from "./customer/customer";
 import { CustomerUser } from "./customerUser";
 
 test('Should be create a customerUser', () => {
@@ -25,7 +25,6 @@ test('Cannot create a customerUser if user !== customer.document', () => {
         document: '963.259.440-11',
         documentType: 'CPF'
     })
-
 
     expect(() => {
         return new CustomerUser({
