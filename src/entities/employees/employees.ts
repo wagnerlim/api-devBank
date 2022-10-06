@@ -1,8 +1,13 @@
+import { validateCnpj } from "../../utils/functions/validateCnpj";
+import { validateCpf } from "../../utils/functions/validateCpf";
+//Descobrir uma maneira de compartilhar os types
 type departament = "Technology" | "Communication" | "Financial" | "Management";
+type documentType = "CPF" | "CNPJ" | "Other";
 export interface EmployeesProps {
   name: string;
   birthday: Date;
   document: string;
+  documentType: documentType;
   departament: departament;
   role: string;
 }
@@ -38,6 +43,11 @@ export class Employee {
   }
 
   constructor(props: EmployeesProps) {
+    if (props.documentType === "CPF") {
+      if (!validateCpf(props.document)) throw new Error("invalid CPF");
+    } else if (props.documentType === "CNPJ") {
+      if (!validateCnpj(props.document)) throw new Error("invalid CNPJ");
+    }
     this.props = props;
   }
 }
