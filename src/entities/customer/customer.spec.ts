@@ -78,7 +78,6 @@ test("Expect to throw a exact error: Phone area Code Invalid!", () => {
         number: "9796757739",
       },
     });
-    throw new Error("");
   } catch (error) {
     expect(error.message).toEqual("Phone area Code Invalid!");
   }
@@ -98,7 +97,6 @@ test("Expect to throw a exact error: Phone Number Invalid!", () => {
         number: "9796757733333",
       },
     });
-    throw new Error("erro");
   } catch (error) {
     expect(error.message).toEqual("Phone Number Invalid!");
   }

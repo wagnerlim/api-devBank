@@ -1,10 +1,7 @@
-import { phone } from "../../types";
+import { phone } from "../../../types";
+import { structBoolean } from "../../../interfaces";
 
-interface validPhone {
-  message: string;
-  valid: boolean;
-}
-export function validatePhone(phone: phone): validPhone {
+export function validatePhone(phone: phone): structBoolean {
   phone.countryCode = phone.countryCode.replace(/[^\d]+/g, "");
   if (phone.countryCode.length > 3)
     return {

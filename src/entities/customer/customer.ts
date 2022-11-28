@@ -1,8 +1,8 @@
 import { documentType, phone } from "../../shared/types";
-import { validateCnpj } from "../../shared/utils/functions/validateCnpj";
-import { validateCpf } from "../../shared/utils/functions/validateCpf";
-import { validateEmail } from "../../shared/utils/functions/validateEmail";
-import { validatePhone } from "../../shared/utils/functions/validatePhone";
+import { validateCnpj } from "../../shared/utils/functions/validators/validateCnpj";
+import { validateCpf } from "../../shared/utils/functions/validators/validateCpf";
+import { validateEmail } from "../../shared/utils/functions/validators/validateEmail";
+import { validatePhone } from "../../shared/utils/functions/validators/validatePhone";
 
 export interface CustomerProps {
   name: string;
