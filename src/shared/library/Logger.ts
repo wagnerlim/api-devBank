@@ -1,22 +1,15 @@
 import chalk from "chalk";
 import moment from "moment";
+import chalkColors, { IHexColors, IRgbColors } from "../Colors/chalkColors";
 
-interface IColors {
-  green: string;
-  blue: string;
-  yellow: string;
-  red: string;
-}
-export default class Logger {
-  private colors: IColors;
-
-  SetColorsProps(colors: IColors) {
+export default class Logger extends chalkColors {
+  SetColorsProps(colors: IHexColors | IRgbColors) {
     this.colors = colors;
   }
 
-  constructor(colors: IColors) {
+  constructor(colors: IHexColors | IRgbColors) {
+    super(colors);
     moment.locale("pt-Br");
-    this.colors = colors;
   }
 
   public static info(value: any) {
@@ -49,26 +42,93 @@ export default class Logger {
     );
   }
 
-  setColors(colors: IColors): void {
+  setColors(colors: IHexColors | IRgbColors): void {
     this.SetColorsProps(colors);
   }
 
   private resolveMethods(method: string) {
-    switch (method) {
-      case "GET":
-        return chalk.hex(this.colors.green).visible(method);
-      case "POST":
-        return chalk.hex(this.colors.yellow).visible(method);
-      case "PUT":
-        return chalk.hex(this.colors.blue).visible(method);
-      case "DELETE":
-        return chalk.hex(this.colors.red).visible(method);
-      default:
-        return chalk.hex(this.colors.red).visible(method);
+    if (this.colors.type === "HEX") {
+      switch (method) {
+        case "GET":
+          return chalk.hex(this.colors.green).visible(method);
+        case "POST":
+          return chalk.hex(this.colors.yellow).visible(method);
+        case "PUT":
+          return chalk.hex(this.colors.blue).visible(method);
+        case "DELETE":
+          return chalk.hex(this.colors.red).visible(method);
+        default:
+          return chalk.hex(this.colors.red).visible(method);
+      }
+    } else {
+      switch (method) {
+        case "GET":
+          return chalk
+            .rgb(
+              this.colors.green.green,
+              this.colors.green.blue,
+              this.colors.green.red
+            )
+            .visible(method);
+        case "POST":
+          return chalk
+            .rgb(
+              this.colors.yellow.green,
+              this.colors.yellow.blue,
+              this.colors.yellow.red
+            )
+            .visible(method);
+        case "PUT":
+          return chalk
+            .rgb(
+              this.colors.blue.green,
+              this.colors.blue.blue,
+              this.colors.blue.red
+            )
+            .visible(method);
+        case "DELETE":
+          return chalk
+            .rgb(
+              this.colors.red.green,
+              this.colors.red.blue,
+              this.colors.red.red
+            )
+            .visible(method);
+        default:
+          return chalk
+            .rgb(
+              this.colors.red.green,
+              this.colors.red.blue,
+              this.colors.red.red
+            )
+            .visible(method);
+      }
     }
   }
 
   private resolveStatus(status: string) {
+    if (this.colors.type === "HEX") {
+      switch (status) {
+        case "200":
+        case "201":
+        case "202":
+        case "203":
+        case "204":
+        case "205":
+        case "206":
+        case "207":
+          return chalk.hex(this.colors.green).visible(status);
+        case "401":
+        case "402":
+        case "403":
+        case "404":
+        case "405":
+        case "406":
+          return chalk.hex(this.colors.yellow).visible(status);
+        default:
+          return chalk.hex(this.colors.red).visible(status);
+      }
+    }
     switch (status) {
       case "200":
       case "201":
@@ -78,16 +138,30 @@ export default class Logger {
       case "205":
       case "206":
       case "207":
-        return chalk.hex(this.colors.green).visible(status);
+        return chalk
+          .rgb(
+            this.colors.green.green,
+            this.colors.green.blue,
+            this.colors.green.red
+          )
+          .visible(status);
       case "401":
       case "402":
       case "403":
       case "404":
       case "405":
       case "406":
-        return chalk.hex(this.colors.yellow).visible(status);
+        return chalk
+          .rgb(
+            this.colors.yellow.green,
+            this.colors.yellow.blue,
+            this.colors.yellow.red
+          )
+          .visible(status);
       default:
-        return chalk.hex(this.colors.red).visible(status);
+        return chalk
+          .rgb(this.colors.red.green, this.colors.red.blue, this.colors.red.red)
+          .visible(status);
     }
   }
 }

@@ -9,11 +9,13 @@ export const app = express();
 
 /*Connection to mongo */
 const Log = new Logger({
+  type: "HEX",
   green: "#47F90A",
-  blue: "#FCE207",
-  yellow: "#0742FC",
+  blue: "#0742FC",
+  yellow: "#FCE207",
   red: "#FC0707",
 });
+
 mongoose
   .connect(config.mongo.url, { retryWrites: true, w: "majority" })
   .then(() => {
