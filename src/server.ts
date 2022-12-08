@@ -3,10 +3,17 @@ import http from "http";
 import mongoose from "mongoose";
 import { config } from "./configs/config";
 import Logger from "./shared/library/Logger";
+import responseTime from "response-time";
 
 export const app = express();
 
 /*Connection to mongo */
+const Log = new Logger({
+  green: "#47F90A",
+  blue: "#FCE207",
+  yellow: "#0742FC",
+  red: "#FC0707",
+});
 mongoose
   .connect(config.mongo.url, { retryWrites: true, w: "majority" })
   .then(() => {
@@ -17,23 +24,16 @@ mongoose
     Logger.error("Unable to connect:");
     Logger.error(error.message);
   });
-
 /* Only start server if mongo connects */
 const StartServer = () => {
-  app.use((req, res, next) => {
-    /* Log the Request */
-    Logger.info(
-      `[${req.method}]: - Url: [${req.url}] - IP:[${req.socket.remoteAddress}]`
-    );
-
-    res.on("finish", () => {
-      /* Log the response*/
-      Logger.info(
-        `[${req.method}]: - Url: [${req.url}] - Status: [${res.statusCode}]`
-      );
-    });
-    next();
-  });
+  app.use(
+    responseTime((req, res, timer) => {
+      res.on("finish", () => {
+        /* Log the response*/
+        Log.response(res, req, timer.toFixed(2));
+      });
+    })
+  );
 
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
