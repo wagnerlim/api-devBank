@@ -3,10 +3,6 @@ import moment from "moment";
 import chalkColors, { IHexColors, IRgbColors } from "../Colors/chalkColors";
 
 export default class Logger extends chalkColors {
-  SetColorsProps(colors: IHexColors | IRgbColors) {
-    this.colors = colors;
-  }
-
   constructor(colors: IHexColors | IRgbColors) {
     super(colors);
     moment.locale("pt-Br");
@@ -46,6 +42,10 @@ export default class Logger extends chalkColors {
     this.SetColorsProps(colors);
   }
 
+  get getChalkColors(): IHexColors | IRgbColors {
+    return this.getColors;
+  }
+
   private resolveMethods(method: string) {
     if (this.colors.type === "HEX") {
       switch (method) {
@@ -65,48 +65,48 @@ export default class Logger extends chalkColors {
         case "GET":
           return chalk
             .rgb(
-              this.colors.green.green,
-              this.colors.green.blue,
-              this.colors.green.red
+              this.colors.green.r,
+              this.colors.green.g,
+              this.colors.green.b
             )
             .visible(method);
         case "POST":
           return chalk
             .rgb(
-              this.colors.yellow.green,
-              this.colors.yellow.blue,
-              this.colors.yellow.red
+              this.colors.yellow.r,
+              this.colors.yellow.g,
+              this.colors.yellow.b
             )
             .visible(method);
         case "PUT":
           return chalk
             .rgb(
-              this.colors.blue.green,
-              this.colors.blue.blue,
-              this.colors.blue.red
+              this.colors.blue.r,
+              this.colors.blue.g,
+              this.colors.blue.b
             )
             .visible(method);
         case "DELETE":
           return chalk
             .rgb(
-              this.colors.red.green,
-              this.colors.red.blue,
-              this.colors.red.red
+              this.colors.red.r,
+              this.colors.red.g,
+              this.colors.red.b
             )
             .visible(method);
         default:
           return chalk
             .rgb(
-              this.colors.red.green,
-              this.colors.red.blue,
-              this.colors.red.red
+              this.colors.red.r,
+              this.colors.red.g,
+              this.colors.red.b
             )
             .visible(method);
       }
     }
   }
 
-  private resolveStatus(status: string) {
+  protected resolveStatus(status: string) {
     if (this.colors.type === "HEX") {
       switch (status) {
         case "200":
@@ -140,9 +140,9 @@ export default class Logger extends chalkColors {
       case "207":
         return chalk
           .rgb(
-            this.colors.green.green,
-            this.colors.green.blue,
-            this.colors.green.red
+            this.colors.green.r,
+            this.colors.green.g,
+            this.colors.green.b
           )
           .visible(status);
       case "401":
@@ -153,14 +153,14 @@ export default class Logger extends chalkColors {
       case "406":
         return chalk
           .rgb(
-            this.colors.yellow.green,
-            this.colors.yellow.blue,
-            this.colors.yellow.red
+            this.colors.yellow.r,
+            this.colors.yellow.g,
+            this.colors.yellow.b
           )
           .visible(status);
       default:
         return chalk
-          .rgb(this.colors.red.green, this.colors.red.blue, this.colors.red.red)
+          .rgb(this.colors.red.r,this.colors.red.g, this.colors.red.b)
           .visible(status);
     }
   }

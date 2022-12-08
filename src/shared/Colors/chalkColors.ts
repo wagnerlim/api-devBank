@@ -1,3 +1,5 @@
+import { Hex, Rgb } from "../types";
+
 export interface IHexColors {
   type: "HEX";
   green: Hex;
@@ -13,13 +15,6 @@ export interface IRgbColors {
   yellow: Rgb;
   red: Rgb;
 }
-
-type Hex = `#${string}`;
-type Rgb = {
-  red: number;
-  green: number;
-  blue: number;
-};
 
 export default class chalkColors {
   protected colors: IHexColors | IRgbColors;

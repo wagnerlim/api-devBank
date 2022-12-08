@@ -9,3 +9,9 @@ export type phone = {
   areaCode: string;
   number: string;
 };
+export type Hex = `#${string}`;
+export type Rgb = {
+  r: number;
+  g: number;
+  b: number;
+};
