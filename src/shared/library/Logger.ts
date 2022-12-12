@@ -24,8 +24,8 @@ export default class Logger extends chalkColors {
 
   public static error(value: any) {
     console.log(
-      chalk.blue(`${new Date().toLocaleString()} [ERROR]`),
-      typeof value === "string" ? chalk.redBright(value) : value
+      chalk.red(`${new Date().toLocaleString()} [ERROR]`),
+      typeof value.message === "string" ? chalk.redBright(value.message) : value
     );
   }
 

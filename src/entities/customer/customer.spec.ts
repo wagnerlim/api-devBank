@@ -39,7 +39,7 @@ test("should be throw a error invalid country code", () => {
           number: "979675773",
         },
       });
-    } catch (error) {
+    } catch (error: any) {
       throw new Error(error.message);
     }
   }).toThrowError("Phone Contry Code Invalid!");
@@ -59,7 +59,7 @@ test("Expect to throw a exact error: Phone Contry Code Invalid!", () => {
         number: "979675773",
       },
     });
-  } catch (error) {
+  } catch (error: any) {
     expect(error.message).toEqual("Phone Contry Code Invalid!");
   }
 });
@@ -78,7 +78,7 @@ test("Expect to throw a exact error: Phone area Code Invalid!", () => {
         number: "9796757739",
       },
     });
-  } catch (error) {
+  } catch (error: any) {
     expect(error.message).toEqual("Phone area Code Invalid!");
   }
 });
@@ -97,7 +97,7 @@ test("Expect to throw a exact error: Phone Number Invalid!", () => {
         number: "9796757733333",
       },
     });
-  } catch (error) {
+  } catch (error: any) {
     expect(error.message).toEqual("Phone Number Invalid!");
   }
 });
@@ -148,7 +148,7 @@ test("Expect to throw exact message: invalid CPF", () => {
       document: "0000000000",
       documentType: "CPF",
     });
-  } catch (error) {
+  } catch (error: any) {
     expect(error.message).toEqual("invalid CPF");
   }
 });
@@ -199,7 +199,7 @@ test("Expect to throw exact message: invalid CNPJ", () => {
       document: "0000000000",
       documentType: "CNPJ",
     });
-  } catch (error) {
+  } catch (error: any) {
     expect(error.message).toEqual("invalid CNPJ");
   }
 });
