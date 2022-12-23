@@ -23,7 +23,7 @@ export class App {
     this.middlewares();
     this.routes();
     this.iniciateServer();
-    this.setRoutes()
+    // this.setRoutes()
   }
 
   private middlewares() {
